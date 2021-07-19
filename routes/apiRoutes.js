@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const fs = require('fs');
+const uniqid = require('uniqid');
 
 // create a route that respondes with all notes coming from the database
 
@@ -16,7 +17,8 @@ router.post('/notes', (req, res) => {
     fs.readFile('./db/db.json', (err, data) => {
         if (err) throw err;
         var json = JSON.parse(data);
-        req.body.id = json.length;
+        // I used npm i uniqid 
+        req.body.id = uniqid();    
         json.push(req.body);
         fs.writeFile('./db/db.json', JSON.stringify(json), (err) => {
             if (err) throw err;
